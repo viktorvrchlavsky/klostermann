@@ -23,7 +23,7 @@ app.get('/api/bookings', (req, res) => {
 
 // Create a new booking
 app.post('/api/bookings', (req, res) => {
-  const newBooking = req.body;
+  const newBooking = { id: Date.now(), ...req.body }; // Add an ID
 
   fs.readFile(dbPath, 'utf8', (err, data) => {
     if (err) {
@@ -37,6 +37,59 @@ app.post('/api/bookings', (req, res) => {
         return res.status(500).json({ error: 'Failed to save booking.' });
       }
       res.status(201).json(newBooking);
+    });
+  });
+});
+
+// Update a booking
+app.put('/api/bookings/:id', (req, res) => {
+  const bookingId = parseInt(req.params.id, 10);
+  const updatedBooking = req.body;
+
+  fs.readFile(dbPath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to read bookings.' });
+    }
+    const db = JSON.parse(data);
+    const bookingIndex = db.bookings.findIndex(b => b.id === bookingId);
+
+    if (bookingIndex === -1) {
+      return res.status(404).json({ error: 'Booking not found.' });
+    }
+
+    db.bookings[bookingIndex] = { ...db.bookings[bookingIndex], ...updatedBooking };
+
+    fs.writeFile(dbPath, JSON.stringify(db, null, 2), (err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Failed to update booking.' });
+      }
+      res.json(db.bookings[bookingIndex]);
+    });
+  });
+});
+
+// Delete a booking
+app.delete('/api/bookings/:id', (req, res) => {
+  const bookingId = parseInt(req.params.id, 10);
+
+  fs.readFile(dbPath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to read bookings.' });
+    }
+    const db = JSON.parse(data);
+    const filteredBookings = db.bookings.filter(b => b.id !== bookingId);
+
+    if (db.bookings.length === filteredBookings.length) {
+      return res.status(404).json({ error: 'Booking not found.' });
+    }
+
+    db.bookings = filteredBookings;
+
+    fs.writeFile(dbPath, JSON.stringify(db, null, 2), (err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Failed to delete booking.' });
+      }
+      res.status(204).send();
     });
   });
 });
