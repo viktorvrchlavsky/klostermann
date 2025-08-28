@@ -10,42 +10,70 @@ This is a simple web application for booking appointments. It features a React f
 
 ## How to Run Locally
 
-To run this application on your local machine, you need to have Node.js and npm installed.
+This guide will walk you through setting up and running the application on your local machine.
 
-### 1. Clone the Repository
+### Prerequisites
 
-First, clone this repository to your local machine.
+Before you begin, you need to have **Node.js** and **npm** installed on your computer. npm (Node Package Manager) is included with the Node.js installation.
 
-### 2. Install Dependencies
+*   **To install Node.js**, go to the official website: [nodejs.org](https://nodejs.org/).
+*   Download the **LTS (Long Term Support)** version recommended for most users.
+*   Run the installer and follow the on-screen instructions.
+*   To verify the installation, open a terminal or command prompt and run the following commands:
+    ```bash
+    node -v
+    npm -v
+    ```
+    These commands should display the installed versions of Node.js and npm.
 
-You need to install dependencies for both the server and the client.
+### Step 1: Get the Code
 
-**Server Dependencies:**
-Open a terminal and navigate to the `server` directory, then run:
+First, you need to get the application code on your computer. If you have `git` installed, you can clone the repository:
+
 ```bash
-npm install
+git clone https://github.com/viktorvrchlavsky/klostermann.git
 ```
 
-**Client Dependencies:**
-In another terminal, navigate to the `client` directory and run:
-```bash
-npm install
-```
+If you don't have `git`, you can download the source code as a ZIP file from the repository's main page and unzip it.
 
-### 3. Run the Application
+### Step 2: Install Dependencies
 
-You need to run the backend server and the frontend client in two separate terminals.
+The application is split into two parts: a `server` (backend) and a `client` (frontend). Both have their own dependencies that need to be installed.
+
+**Install Server Dependencies:**
+1.  Open your terminal or command prompt.
+2.  Navigate to the `server` directory inside the project folder.
+3.  Run the following command to install the necessary packages for the server:
+    ```bash
+    npm install
+    ```
+
+**Install Client Dependencies:**
+1.  Open another terminal or use the same one.
+2.  Navigate to the `client` directory inside the project folder.
+3.  Run the following command to install the necessary packages for the client:
+    ```bash
+    npm install
+    ```
+
+### Step 3: Run the Application
+
+To run the application, you need to have both the server and the client running at the same time. You will need two separate terminal windows for this.
 
 **Run the Backend Server:**
-In the `server` directory, run:
-```bash
-node server.js
-```
-The server will start on `http://localhost:3001`.
+1.  In a terminal, make sure you are in the `server` directory.
+2.  Run the following command:
+    ```bash
+    node server.js
+    ```
+    The server will start. You will see a message like `Server is running on http://localhost:3001`. Keep this terminal window open.
 
 **Run the Frontend Client:**
-In the `client` directory, run:
-```bash
-npm start
-```
-The application will open in your browser at `http://localhost:3000`.
+1.  In your second terminal, make sure you are in the `client` directory.
+2.  Run the following command:
+    ```bash
+    npm start
+    ```
+    This will automatically open the application in your default web browser at `http://localhost:3000`.
+
+You should now see the application running in your browser!
